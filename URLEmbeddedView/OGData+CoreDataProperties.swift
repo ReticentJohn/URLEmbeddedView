@@ -13,6 +13,7 @@ extension OGData {
 
     @NSManaged public var createDate: Date
     @NSManaged public var imageUrl: String
+    @NSManaged public var videoUrl: String
     @NSManaged public var pageDescription: String
     @NSManaged public var pageTitle: String
     @NSManaged public var pageType: String

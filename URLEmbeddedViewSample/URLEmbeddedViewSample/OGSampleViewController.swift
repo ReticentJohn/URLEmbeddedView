@@ -126,6 +126,7 @@ extension OGSampleViewController: UISearchBarDelegate {
                     + "- imageUrl         = \(ogData.imageUrl)\n"
                     + "- createDate       = \(ogData.createDate)\n"
                     + "- updateDate       = \(ogData.updateDate)\n"
+                    + "- videoUrl         = \(ogData.videoUrl)\n"
                 DispatchQueue.main.async {
                     self?.textView.text = text
                 }

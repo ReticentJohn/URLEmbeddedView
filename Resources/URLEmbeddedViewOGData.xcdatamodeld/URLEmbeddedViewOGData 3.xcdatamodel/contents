@@ -10,8 +10,9 @@
         <attribute name="sourceUrl" optional="YES" attributeType="String" indexed="YES" syncable="YES"/>
         <attribute name="updateDate" optional="YES" attributeType="Date" defaultDateTimeInterval="-978339600" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="url" optional="YES" attributeType="String" indexed="YES" syncable="YES"/>
+        <attribute name="videoUrl" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
     <elements>
-        <element name="OGData" positionX="-63" positionY="-18" width="128" height="180"/>
+        <element name="OGData" positionX="-63" positionY="-18" width="128" height="195"/>
     </elements>
 </model>

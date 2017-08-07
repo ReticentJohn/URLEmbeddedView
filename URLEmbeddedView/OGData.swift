@@ -17,6 +17,7 @@ public final class OGData: NSManagedObject {
         case title       = "og:title"
         case type        = "og:type"
         case url         = "og:url"
+        case video       = "og:video"
     }
     
     private lazy var URL: Foundation.URL? = {
@@ -53,6 +54,7 @@ public final class OGData: NSManagedObject {
         case .title       : pageTitle       = content
         case .image       : imageUrl        = content
         case .url         : url             = content
+        case .video       : videoUrl        = content
         case .description : pageDescription = content.replacingOccurrences(of: "\n", with: " ")
         }
     }
