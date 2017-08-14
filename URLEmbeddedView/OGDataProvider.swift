@@ -43,7 +43,7 @@ import Kanna
 public final class OGDataProvider: NSObject {
     
     private class TaskContainer: TaskContainable {
-        typealias Completion = ((OGData, Error?) -> Void)
+        typealias Completion = (([String : String], Error?) -> Void)
         
         let uuidString: String
         let task: URLSessionDataTask
