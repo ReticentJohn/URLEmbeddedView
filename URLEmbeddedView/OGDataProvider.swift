@@ -83,8 +83,8 @@ public final class OGDataProvider: NSObject {
     
     @discardableResult
     public func fetchOGData(urlString: String, completion: ((OGData, Error?) -> Void)? = nil) -> String? {
-        let ogData = OGData.fetchOrInsertOGData(url: urlString)
-        if !ogData.sourceUrl.isEmpty {
+        let ogData = OGData()
+        /*if !ogData.sourceUrl.isEmpty {
             completion?(ogData, nil)
             if fabs(ogData.updateDate.timeIntervalSinceNow) < updateInterval {
                 return nil
@@ -94,7 +94,7 @@ public final class OGDataProvider: NSObject {
         guard let URL = URL(string: urlString) else {
             completion?(ogData, NSError(domain: "can not create NSURL with \"\(urlString)\"", code: 9999, userInfo: nil))
             return nil
-        }
+        }*/
         var request = URLRequest(url: URL)
         request.setValue(Const.userAgent, forHTTPHeaderField: "User-Agent")
         request.timeoutInterval = 5
@@ -123,7 +123,7 @@ public final class OGDataProvider: NSObject {
                 }
                 ogData.setValue(property: property, content: content)
             }
-            ogData.save()
+            //ogData.save()
             
             completion?(ogData, nil)
         }) 
