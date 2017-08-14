@@ -89,12 +89,12 @@ public final class OGDataProvider: NSObject {
             if fabs(ogData.updateDate.timeIntervalSinceNow) < updateInterval {
                 return nil
             }
-        }
+        }*/
         ogData.sourceUrl = urlString
         guard let URL = URL(string: urlString) else {
             completion?(ogData, NSError(domain: "can not create NSURL with \"\(urlString)\"", code: 9999, userInfo: nil))
             return nil
-        }*/
+        }
         var request = URLRequest(url: URL)
         request.setValue(Const.userAgent, forHTTPHeaderField: "User-Agent")
         request.timeoutInterval = 5
