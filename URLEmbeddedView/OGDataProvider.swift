@@ -82,8 +82,8 @@ public final class OGDataProvider: NSObject {
     }
     
     @discardableResult
-    public func fetchOGData(urlString: String, completion: ((OGData, Error?) -> Void)? = nil) -> String? {
-        let ogData = OGData()
+    public func fetchOGData(urlString: String, completion: (([String: String], Error?) -> Void)? = nil) -> String? {
+        //let ogData = OGData()
         /*if !ogData.sourceUrl.isEmpty {
             completion?(ogData, nil)
             if fabs(ogData.updateDate.timeIntervalSinceNow) < updateInterval {
@@ -91,8 +91,11 @@ public final class OGDataProvider: NSObject {
             }
         }
         ogData.sourceUrl = urlString*/
+        
+        var meta: [String: String] = [:]
+
         guard let URL = URL(string: urlString) else {
-            completion?(ogData, NSError(domain: "can not create NSURL with \"\(urlString)\"", code: 9999, userInfo: nil))
+            completion?(meta, NSError(domain: "can not create NSURL with \"\(urlString)\"", code: 9999, userInfo: nil))
             return nil
         }
         var request = URLRequest(url: URL)
@@ -115,17 +118,22 @@ public final class OGDataProvider: NSObject {
                 return
             }
             let metaTags = header.xpath(Const.metaTagKey)
+            
+            
             for metaTag in metaTags {
                 guard let property = metaTag[Const.propertyKey],
                       let content = metaTag[Const.contentKey]
                       , property.hasPrefix(Const.propertyPrefix) else {
                     continue
                 }
-                ogData.setValue(property: property, content: content)
+                
+                meta[property] = content
+                
+                //ogData.setValue(property: property, content: content)
             }
             //ogData.save()
             
-            completion?(ogData, nil)
+            completion?(meta, nil)
         }) 
         taskContainers[uuidString] = TaskContainer(uuidString: uuidString, task: task, completion: completion)
         task.resume()
