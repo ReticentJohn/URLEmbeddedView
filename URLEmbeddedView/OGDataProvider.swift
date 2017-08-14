@@ -108,13 +108,13 @@ public final class OGDataProvider: NSObject {
             _ = self?.taskContainers.removeValue(forKey: uuidString)
             
             if let error = error {
-                completion?(ogData, error)
+                completion?(meta, error)
                 return
             }
             guard let data = data,
                   let html = Kanna.HTML(html: data, encoding: String.Encoding.utf8),
                   let header = html.head else {
-                completion?(ogData, nil)
+                completion?(meta, nil)
                 return
             }
             let metaTags = header.xpath(Const.metaTagKey)
