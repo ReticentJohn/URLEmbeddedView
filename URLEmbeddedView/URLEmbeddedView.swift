@@ -82,7 +82,7 @@ open class URLEmbeddedView: UIView {
     }
     
     open func prepareViewsForReuse() {
-        cancelLoad()
+        //cancelLoad()
         imageView.image = nil
         titleLabel.attributedText = nil
         descriptionLabel.attributedText = nil
@@ -298,10 +298,10 @@ open class URLEmbeddedView: UIView {
             return
         }
         self.URL = URL
-        load(completion)
+        //load(completion)
     }
     
-    public func load(_ completion: ((Error?) -> Void)? = nil) {
+    /*public func load(_ completion: ((Error?) -> Void)? = nil) {
         guard let URL = URL else { return }
         prepareViewsForReuse()
         activityView.startAnimating()
@@ -367,5 +367,5 @@ open class URLEmbeddedView: UIView {
         activityView.stopAnimating()
         guard let uuidString = uuidString else { return }
         OGDataProvider.shared.cancelLoad(uuidString, stopTask: stopTaskWhenCancel)
-    }
+    }*/
 }
