@@ -109,7 +109,7 @@ extension OpenGraph.Data {
                 self = .type
             } else if property.contains("og:url") {
                 self = .url
-            } else if property.lowercased() == "og:video" && content.contains("http") {
+            } else if property.contains("og:video") && content.contains("http") {
                 self = .videoUrl
             } else {
                 return nil
@@ -155,7 +155,9 @@ extension OpenGraph.Data {
                     .replacingOccurrences(of: "\n", with: " ")
                 
             case .videoUrl:
-                result.videoUrl = URL(string: meta.content)
+                if meta.property == "og:video" && meta.content.contains("http") {
+                    result.videoUrl = URL(string: meta.content)
+                }
             }
         }
 
