@@ -19,6 +19,7 @@ extension OpenGraph {
         public private(set) var siteName: String?
         public private(set) var sourceUrl: URL?
         public private(set) var url: URL?
+        public private(set) var videoUrl: URL?
     }
 }
 
@@ -42,6 +43,9 @@ extension OpenGraph.Data {
         if let value = url?.absoluteString, !value.isEmpty {
             return false
         }
+        if let value = videoUrl?.absoluteString, !value.isEmpty {
+            return false
+        }
         return true
     }
 
@@ -53,6 +57,7 @@ extension OpenGraph.Data {
         siteName = ogData.siteName.isEmpty ? nil : ogData.siteName
         sourceUrl = URL(string: ogData.sourceUrl)
         url = URL(string: ogData.url)
+        videoUrl = nil
     }
 
     init(youtube: OpenGraph.Youtube, sourceUrl: String) {
@@ -64,6 +69,7 @@ extension OpenGraph.Data {
         let url = URL(string: sourceUrl)
         self.sourceUrl = url
         self.url = url
+        self.videoUrl = url
     }
 
     static func empty() -> OpenGraph.Data {
@@ -73,7 +79,8 @@ extension OpenGraph.Data {
                      pageType: nil,
                      siteName: nil,
                      sourceUrl: nil,
-                     url: nil)
+                     url: nil,
+                     videoUrl: nil)
     }
 }
 
@@ -85,6 +92,7 @@ extension OpenGraph.Data {
         case title
         case type
         case url
+        case videoUrl
 
         init?(_ meta: OpenGraph.HTML.Metadata) {
             let property = meta.property
@@ -101,6 +109,8 @@ extension OpenGraph.Data {
                 self = .type
             } else if property.contains("og:url") {
                 self = .url
+            } else if property.contains("og:video") {
+                self = .videoUrl
             } else {
                 return nil
             }
@@ -115,6 +125,7 @@ extension OpenGraph.Data {
         self.siteName = nil
         self.sourceUrl = URL(string: sourceUrl)
         self.url = nil
+        self.videoUrl = nil
     }
 
     init(html: OpenGraph.HTML, sourceUrl: String) {
@@ -142,6 +153,9 @@ extension OpenGraph.Data {
             case .description :
                 result.pageDescription = ((try? meta.unescapedContent()) ?? "")
                     .replacingOccurrences(of: "\n", with: " ")
+                
+            case .videoUrl:
+                result.videoUrl = URL(string: meta.content)
             }
         }
 
@@ -152,6 +166,7 @@ extension OpenGraph.Data {
         self.siteName = data.siteName
         self.sourceUrl = data.sourceUrl
         self.url = data.url
+        self.videoUrl = data.videoUrl
     }
 }
 
@@ -166,6 +181,7 @@ extension OpenGraph.Data: _ObjectiveCBridgeable {
         self.siteName = source.siteName
         self.sourceUrl = source.sourceUrl
         self.url = source.url
+        self.videoUrl = nil
     }
 
     public func _bridgeToObjectiveC() -> OpenGraphData {
