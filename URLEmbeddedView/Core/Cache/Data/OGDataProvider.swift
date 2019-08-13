@@ -55,40 +55,13 @@ protocol OGDataProviderProtocol: class {
         let task = Task()
 
         queue.async { [weak self] in
-            self?.cacheManager.fetchOrInsertOGCacheData(url: urlString) { cache in
-                guard let me = self else { return }
+            _ = self?.downloader.fetchOGData(urlString: urlString, task: task) { result in
+                switch result {
+                case let .success(data, _):
+                    completion?(data, nil)
 
-                if let updateDate = cache.updateDate {
-                    completion?(cache.ogData, nil)
-                    if fabs(updateDate.timeIntervalSinceNow) < me.updateInterval {
-                        return
-                    }
-                }
-
-                _ = me.downloader.fetchOGData(urlString: urlString, task: task) { [weak self] result in
-                    switch result {
-                    case let .success(data, isExpired):
-                        if let me = self {
-                            let cache = OGCacheData(ogData: data,
-                                                    createDate: cache.createDate,
-                                                    updateDate: Date())
-                            me.cacheManager.updateIfNeeded(cache: cache)
-                        }
-                        if !isExpired {
-                            completion?(data, nil)
-                        }
-                    case let .failure(error, isExpired):
-                        let ogData = cache.ogData
-                        if case .htmlDecodeFaild? = error as? OGSession.Error, let me = self {
-                            let newCache = OGCacheData(ogData: ogData,
-                                                       createDate: cache.createDate,
-                                                       updateDate: Date())
-                            me.cacheManager.updateIfNeeded(cache: newCache)
-                        }
-                        if !isExpired {
-                            completion?(ogData, nil)
-                        }
-                    }
+                case .failure:
+                    completion?(OpenGraph.Data.empty(), nil)
                 }
             }
         }
