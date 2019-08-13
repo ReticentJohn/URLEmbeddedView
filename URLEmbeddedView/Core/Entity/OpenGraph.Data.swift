@@ -109,7 +109,7 @@ extension OpenGraph.Data {
                 self = .type
             } else if property.contains("og:url") {
                 self = .url
-            } else if property.contains("og:video") && content.contains("http") {
+            } else if property.lowercased() == "og:video" && content.contains("http") {
                 self = .videoUrl
             } else {
                 return nil
