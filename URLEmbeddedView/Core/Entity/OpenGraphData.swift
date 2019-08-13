@@ -17,6 +17,7 @@ import Foundation
     @objc public let siteName: String?
     @objc public let sourceUrl: URL?
     @objc public let url: URL?
+    @objc public let videoUrl: URL?
 
     init(source: OpenGraph.Data) {
         self.imageUrl = source.imageUrl
@@ -26,5 +27,6 @@ import Foundation
         self.siteName = source.siteName
         self.sourceUrl = source.sourceUrl
         self.url = source.url
+        self.videoUrl = source.videoUrl
     }
 }
