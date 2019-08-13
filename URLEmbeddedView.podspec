@@ -8,14 +8,14 @@
 
 Pod::Spec.new do |s|
   s.name             = "URLEmbeddedView"
-  s.version          = "0.8.1"
+  s.version          = "0.17.1"
   s.summary          = "URLEmbeddedView is a view that automatically cache the Open Graph Protocol."
 
 # This description is used to generate tags and improve search results.
 #   * Think: What does it do? Why did you write it? What is the focus?
 #   * Try to keep it short, snappy and to the point.
 #   * Write the description between the DESC delimiters below.
-#   * Finally, don't worry about the indent, CocoaPods strips it!  
+#   * Finally, don't worry about the indent, CocoaPods strips it!
   #s.description      = <<-DESC
   #DESC
 
@@ -26,10 +26,11 @@ Pod::Spec.new do |s|
   s.source           = { :git => "https://github.com/marty-suzuki/URLEmbeddedView.git", :tag => s.version.to_s }
   s.social_media_url = 'https://twitter.com/marty_suzuki'
 
-  s.platform     = :ios, '8.0'
+  s.ios.deployment_target = '8.0'
+  s.tvos.deployment_target = '10.0'
   s.requires_arc = true
 
-  s.source_files = 'URLEmbeddedView/*.{swift}'
+  s.source_files = 'URLEmbeddedView/**/*.{swift}'
   s.resources    = 'Resources/*.{pdf,xcdatamodeld}'
   #s.resource_bundles = {
   #  'Resources' => ['Resources/*.pdf']
@@ -37,6 +38,4 @@ Pod::Spec.new do |s|
 
   # s.public_header_files = 'Pod/Classes/**/*.h'
   s.frameworks = 'UIKit', 'CoreData', 'CoreGraphics'
-  s.dependency 'MisterFusion', '~> 2.1.0'
-  s.dependency 'Kanna', '~> 2.1.1'
 end
